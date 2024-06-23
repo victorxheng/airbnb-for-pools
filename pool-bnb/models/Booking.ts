@@ -1,0 +1,28 @@
+import mongoose, { Document, Schema } from 'mongoose';
+
+export interface IBooking extends Document {
+    pool: mongoose.Types.ObjectId;
+    guest: mongoose.Types.ObjectId;
+    startDate: Date;
+    endDate: Date;
+    totalPrice: number;
+    status: 'Pending' | 'Confirmed' | 'Cancelled';
+}
+
+const bookingSchema = new Schema<IBooking>(
+    {
+        pool: { type: Schema.Types.ObjectId, ref: 'Pool', required: true },
+        guest: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        startDate: { type: Date, required: true },
+        endDate: { type: Date, required: true },
+        totalPrice: { type: Number, required: true },
+        status: { type: String, enum: ['Pending', 'Confirmed', 'Cancelled'], default: 'Pending' },
+    },
+    { 
+        timestamps: true 
+    }
+);
+
+const Booking = mongoose.models.Booking || mongoose.model<IBooking>('Booking', bookingSchema);
+
+export default Booking;
