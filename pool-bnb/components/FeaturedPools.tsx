@@ -7,8 +7,12 @@ const FeaturedPools: React.FC = () => {
 
   useEffect(() => {
     const fetchFeaturedPools = async () => {
-      const response = await axios.get('/featured-pools');
-      setPools(response.data.data);
+      try {
+        const response = await axios.get('/featured-pools');
+        setPools(response.data.data);
+      } catch (error) {
+        console.error('Failed to fetch featured pools', error);
+      }
     };
     fetchFeaturedPools();
   }, []);

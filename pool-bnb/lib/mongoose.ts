@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("Please add your Mongo URI to .env.local");
-}
-
 let cached = global.mongoose;
 
 if (!cached) {
@@ -13,6 +9,14 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  if (!MONGODB_URI) {
+    if (!global.mongooseMissingUriWarned) {
+      console.warn("MONGODB_URI is not set. Skipping MongoDB connection.");
+      global.mongooseMissingUriWarned = true;
+    }
+    return null;
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -43,4 +47,6 @@ declare global {
   // Allow global `var` declarations
   // eslint-disable-next-line no-var
   var mongoose: any;
+  // eslint-disable-next-line no-var
+  var mongooseMissingUriWarned: boolean | undefined;
 }

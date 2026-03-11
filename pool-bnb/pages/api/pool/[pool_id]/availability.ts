@@ -3,7 +3,9 @@ import mongoose from '../../../../lib/mongoose';
 import Pool from '../../../../models/Pool';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await mongoose();
+  if (!(await mongoose())) {
+    return res.status(503).json({ success: false, error: 'Database is not configured' });
+  }
 
   const { pool_id } = req.query;
   const { startDate, endDate } = req.body;
