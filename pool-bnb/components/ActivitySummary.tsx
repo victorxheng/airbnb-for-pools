@@ -9,12 +9,13 @@ const ActivitySummary: React.FC = () => {
   ];
 
   return (
-    <section>
-      <h2 className="text-2xl font-bold mb-4">Recent Activities</h2>
-      <ul className="list-disc pl-5">
+    <section className="panel p-6 md:p-7">
+      <h2 className="mb-4 text-2xl text-[#173347]">Recent Activities</h2>
+      <ul className="space-y-3">
         {activities.map((activity) => (
-          <li key={activity.id} className="mb-2">
-            <span className="text-gray-700">{activity.description}</span> - <span className="text-gray-500 text-sm">{activity.date}</span>
+          <li key={activity.id} className="rounded-xl border border-[#d7d2c6] bg-white px-4 py-3">
+            <p className="text-sm font-medium text-[#334657]">{activity.description}</p>
+            <p className="mt-1 text-xs text-[#6a7885]">{activity.date}</p>
           </li>
         ))}
       </ul>

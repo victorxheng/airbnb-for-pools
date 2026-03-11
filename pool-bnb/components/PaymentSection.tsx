@@ -3,18 +3,23 @@ import React, { useState } from 'react';
 const PaymentSection: React.FC<{ onPaymentDetailsChange: (details: any) => void }> = ({ onPaymentDetailsChange }) => {
   const [paymentMethodId, setPaymentMethodId] = useState('');
 
-  const handlePaymentChange = () => {
-    onPaymentDetailsChange({ paymentMethodId });
-  };
-
   return (
-    <div className="payment-section">
-      <h2 className="text-2xl font-bold mb-4">Payment Details</h2>
+    <section className="panel p-6 md:p-7">
+      <h2 className="mb-4 text-2xl text-[#173347]">Payment Details</h2>
       <div className="mb-4">
-        <label className="block mb-2">Payment Method ID</label>
-        <input type="text" value={paymentMethodId} onChange={(e) => { setPaymentMethodId(e.target.value); handlePaymentChange(); }} className="w-full p-2 border" />
+        <label className="field-label">Payment Method ID</label>
+        <input
+          type="text"
+          value={paymentMethodId}
+          onChange={(e) => {
+            const next = e.target.value;
+            setPaymentMethodId(next);
+            onPaymentDetailsChange({ paymentMethodId: next });
+          }}
+          className="field-input"
+        />
       </div>
-    </div>
+    </section>
   );
 };
 

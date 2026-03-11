@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface PoolListingCardProps {
   pool: {
@@ -13,14 +14,22 @@ interface PoolListingCardProps {
 
 const PoolListingCard: React.FC<PoolListingCardProps> = ({ pool }) => {
   return (
-    <div className="border p-4 rounded">
-      <img src={pool.images[0]} alt={pool.title} className="w-full h-48 object-cover mb-4" />
-      <h3 className="text-xl font-bold">{pool.title}</h3>
-      <p>{pool.location}</p>
-      <p>${pool.price}</p>
-      {pool.rating && <p>Rating: {pool.rating}</p>}
-      <button className="bg-blue-500 text-white px-4 py-2 rounded mt-4">View Details</button>
-    </div>
+    <article className="panel overflow-hidden">
+      <img
+        src={pool.images?.[0] || 'https://images.unsplash.com/photo-1560184897-ae75f418493e?auto=format&fit=crop&w=1200&q=60'}
+        alt={pool.title}
+        className="h-52 w-full object-cover"
+      />
+      <div className="space-y-2 p-5">
+        <h3 className="text-xl text-[#173347]">{pool.title}</h3>
+        <p className="text-sm font-medium text-[#4a5e70]">{pool.location}</p>
+        <p className="text-sm font-bold text-[#006877]">${pool.price} / day</p>
+        {pool.rating && <p className="text-sm text-[#4a5e70]">Guest rating: {pool.rating}</p>}
+        <Link href={`/pool/${pool._id}`} className="btn-primary mt-2 inline-block text-sm">
+          View Details
+        </Link>
+      </div>
+    </article>
   );
 };
 

@@ -13,15 +13,21 @@ const TabsControl: React.FC<TabsControlProps> = ({ onTabChange }) => {
   };
 
   return (
-    <div className="my-4 flex justify-center">
+    <div className="inline-flex rounded-full border border-[#d7d2c6] bg-[#f0ead8] p-1">
       <button
-        className={`px-4 py-2 ${activeTab === 'login' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+        type="button"
+        className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+          activeTab === 'login' ? 'bg-[#173347] text-white shadow-sm' : 'text-[#3b4e5f] hover:text-[#173347]'
+        }`}
         onClick={() => handleTabChange('login')}
       >
         Login
       </button>
       <button
-        className={`px-4 py-2 ml-2 ${activeTab === 'register' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+        type="button"
+        className={`rounded-full px-5 py-2.5 text-sm font-semibold transition ${
+          activeTab === 'register' ? 'bg-[#173347] text-white shadow-sm' : 'text-[#3b4e5f] hover:text-[#173347]'
+        }`}
         onClick={() => handleTabChange('register')}
       >
         Register

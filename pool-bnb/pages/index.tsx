@@ -6,19 +6,18 @@ import SearchBar from '../components/SearchBar';
 import FeaturedPools from '../components/FeaturedPools';
 import PopularLocations from '../components/PopularLocations';
 import Footer from '../components/Footer';
-import Link from 'next/link';
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className="site-shell">
       <Head>
-        <title>Airbnb for Pools</title>
+        <title>PoolBnB | Private Pool Rentals</title>
         <meta name="description" content="Find and book the best pools in your area or list your pool for others to enjoy." />
-        <Link legacyBehavior rel="icon" href="/favicon.ico"><a></a></Link>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
-      <main className="container mx-auto px-4">
+      <main className="content-wrap flex-1 pb-2">
         <IntroductionSection />
         <SearchBar />
         <FeaturedPools />

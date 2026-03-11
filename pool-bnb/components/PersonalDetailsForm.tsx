@@ -10,8 +10,8 @@ const PersonalDetailsForm: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      setName(user.name);
-      setEmail(user.email);
+      setName(user.name ?? '');
+      setEmail(user.email ?? '');
     }
   }, [user]);
 
@@ -19,8 +19,8 @@ const PersonalDetailsForm: React.FC = () => {
     try {
       await axios.post('/user/profile/update', { name, email, password });
       alert('Profile updated successfully');
-    } catch (error) {
-      console.error('Failed to update profile', error.response.data);
+    } catch (error: any) {
+      console.error('Failed to update profile', error?.response?.data ?? error);
       alert('Failed to update profile');
     }
   };

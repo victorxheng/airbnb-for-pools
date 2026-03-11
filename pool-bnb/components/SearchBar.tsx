@@ -1,27 +1,46 @@
-import React, { useState } from 'react';
-import axios from '../lib/axios';
+import React, { FormEvent, useState } from 'react';
+import { useRouter } from 'next/router';
 
 const SearchBar: React.FC = () => {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSearch = async () => {
-    if (searchTerm.trim()) {
-      const response = await axios.get(`/search?q=${searchTerm}`);
-      console.log(response.data);
+  const handleSearch = async (event: FormEvent) => {
+    event.preventDefault();
+    const trimmedTerm = searchTerm.trim();
+
+    if (!trimmedTerm) {
+      router.push('/pool-listings');
+      return;
     }
+
+    await router.push({
+      pathname: '/pool-listings',
+      query: { location: trimmedTerm },
+    });
   };
 
   return (
-    <div className="my-8 text-center">
-      <input
-        type="text"
-        placeholder="Search for pools..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="border p-2 w-1/2"
-      />
-      <button onClick={handleSearch} className="bg-blue-500 text-white p-2 ml-2">Search</button>
-    </div>
+    <section className="my-8">
+      <form onSubmit={handleSearch} className="panel p-4 md:p-6">
+        <label htmlFor="search-pools" className="mb-2 block text-sm font-semibold text-[#3b4e5f]">
+          Find pools by city or neighborhood
+        </label>
+        <div className="flex flex-col gap-3 md:flex-row">
+          <input
+            id="search-pools"
+            type="text"
+            placeholder="Try: Austin, Miami, Los Angeles..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full rounded-full border border-[#d7d2c6] bg-white px-5 py-3 text-sm outline-none focus:border-[#007a7a]"
+          />
+          <button type="submit" className="btn-primary whitespace-nowrap px-6">
+            Search Pools
+          </button>
+        </div>
+      </form>
+    </section>
   );
 };
 
