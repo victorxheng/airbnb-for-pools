@@ -6,30 +6,73 @@ const BookingForm: React.FC<{ onBookingDetailsChange: (details: any) => void }> 
   const [endDate, setEndDate] = useState('');
   const [guestId, setGuestId] = useState('');
 
-  const handleFormChange = () => {
-    onBookingDetailsChange({ poolId, startDate, endDate, guestId });
+  const updateBookingDetails = (next: { poolId?: string; startDate?: string; endDate?: string; guestId?: string }) => {
+    const updated = {
+      poolId: next.poolId ?? poolId,
+      startDate: next.startDate ?? startDate,
+      endDate: next.endDate ?? endDate,
+      guestId: next.guestId ?? guestId,
+    };
+
+    onBookingDetailsChange(updated);
   };
 
   return (
-    <div className="booking-form">
-      <h2 className="text-2xl font-bold mb-4">Booking Details</h2>
+    <section className="panel p-6 md:p-7">
+      <h2 className="mb-4 text-2xl text-[#173347]">Booking Details</h2>
       <div className="mb-4">
-        <label className="block mb-2">Pool ID</label>
-        <input type="text" value={poolId} onChange={(e) => { setPoolId(e.target.value); handleFormChange(); }} className="w-full p-2 border" />
+        <label className="field-label">Pool ID</label>
+        <input
+          type="text"
+          value={poolId}
+          onChange={(e) => {
+            const next = e.target.value;
+            setPoolId(next);
+            updateBookingDetails({ poolId: next });
+          }}
+          className="field-input"
+        />
       </div>
       <div className="mb-4">
-        <label className="block mb-2">Start Date</label>
-        <input type="date" value={startDate} onChange={(e) => { setStartDate(e.target.value); handleFormChange(); }} className="w-full p-2 border" />
+        <label className="field-label">Start Date</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => {
+            const next = e.target.value;
+            setStartDate(next);
+            updateBookingDetails({ startDate: next });
+          }}
+          className="field-input"
+        />
       </div>
       <div className="mb-4">
-        <label className="block mb-2">End Date</label>
-        <input type="date" value={endDate} onChange={(e) => { setEndDate(e.target.value); handleFormChange(); }} className="w-full p-2 border" />
+        <label className="field-label">End Date</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => {
+            const next = e.target.value;
+            setEndDate(next);
+            updateBookingDetails({ endDate: next });
+          }}
+          className="field-input"
+        />
       </div>
       <div className="mb-4">
-        <label className="block mb-2">Guest ID</label>
-        <input type="text" value={guestId} onChange={(e) => { setGuestId(e.target.value); handleFormChange(); }} className="w-full p-2 border" />
+        <label className="field-label">Guest ID</label>
+        <input
+          type="text"
+          value={guestId}
+          onChange={(e) => {
+            const next = e.target.value;
+            setGuestId(next);
+            updateBookingDetails({ guestId: next });
+          }}
+          className="field-input"
+        />
       </div>
-    </div>
+    </section>
   );
 };
 

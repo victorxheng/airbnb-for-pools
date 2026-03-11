@@ -7,82 +7,96 @@ const RegistrationForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState<'Owner' | 'Guest'>('Guest');
   const [name, setName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage('');
+
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setErrorMessage('Passwords do not match.');
       return;
     }
+
+    setIsSubmitting(true);
+
     try {
       const response = await axios.post('/auth/register', { email, password, role, name });
       console.log('Registration successful', response.data);
       // Handle successful registration (e.g., redirect to login)
-    } catch (error) {
-      console.error('Registration failed', error.response.data);
+    } catch (error: any) {
+      console.error('Registration failed', error?.response?.data || error);
+      setErrorMessage('Unable to create account right now.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded shadow-md w-1/2 mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-gray-700">Email:</label>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label htmlFor="email" className="field-label">Email</label>
         <input
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded mt-1"
+          className="field-input"
           required
         />
       </div>
-      <div className="mb-4">
-        <label htmlFor="password" className="block text-gray-700">Password:</label>
+      <div>
+        <label htmlFor="password" className="field-label">Password</label>
         <input
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded mt-1"
+          className="field-input"
           required
         />
       </div>
-      <div className="mb-4">
-        <label htmlFor="confirm-password" className="block text-gray-700">Confirm Password:</label>
+      <div>
+        <label htmlFor="confirm-password" className="field-label">Confirm Password</label>
         <input
           type="password"
           id="confirm-password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded mt-1"
+          className="field-input"
           required
         />
       </div>
-      <div className="mb-4">
-        <label htmlFor="role" className="block text-gray-700">Role:</label>
+      <div>
+        <label htmlFor="role" className="field-label">Role</label>
         <select
           id="role"
           value={role}
           onChange={(e) => setRole(e.target.value as 'Owner' | 'Guest')}
-          className="w-full p-2 border border-gray-300 rounded mt-1"
+          className="field-input"
           required
         >
           <option value="Guest">Guest</option>
           <option value="Owner">Pool Owner</option>
         </select>
       </div>
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-gray-700">Name (optional):</label>
+      <div>
+        <label htmlFor="name" className="field-label">Name (optional)</label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded mt-1"
+          className="field-input"
         />
       </div>
-      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Register</button>
+      {errorMessage && (
+        <p className="rounded-xl border border-[#f1c5c5] bg-[#fde8e8] px-3 py-2 text-sm text-[#8f2f2f]">{errorMessage}</p>
+      )}
+      <button type="submit" disabled={isSubmitting} className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60">
+        {isSubmitting ? 'Creating account...' : 'Create account'}
+      </button>
     </form>
   );
 };

@@ -1,14 +1,29 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-gray-800 text-white py-4">
-      <div className="container mx-auto text-center">
-        <p>Contact Us | About Us | Privacy Policy</p>
-        <div className="mt-2">
-          <a href="https://facebook.com" className="mx-2">Facebook</a>
-          <a href="https://twitter.com" className="mx-2">Twitter</a>
-          <a href="https://instagram.com" className="mx-2">Instagram</a>
+    <footer className="mt-10 border-t border-[#d7d2c6] bg-[#173347] py-8 text-white">
+      <div className="content-wrap flex flex-col items-center justify-between gap-3 text-sm md:flex-row">
+        <p className="text-white/80">© {year} PoolBnB. Built for stress-free pool booking.</p>
+        <div className="flex flex-wrap items-center gap-4">
+          <Link href="/contact" className="hover:text-[#bee9e8]">
+            Contact
+          </Link>
+          <a href="#" className="hover:text-[#bee9e8]">
+            Privacy
+          </a>
+          <a href="#" className="hover:text-[#bee9e8]">
+            Terms
+          </a>
+          <a href="https://instagram.com" className="hover:text-[#bee9e8]">
+            Instagram
+          </a>
+          <a href="https://facebook.com" className="hover:text-[#bee9e8]">
+            Facebook
+          </a>
         </div>
       </div>
     </footer>

@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+const configuredBaseUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+const normalizedBaseUrl = configuredBaseUrl?.replace(/\/+$/, '');
+const baseURL = normalizedBaseUrl
+  ? normalizedBaseUrl.endsWith('/api')
+    ? normalizedBaseUrl
+    : `${normalizedBaseUrl}/api`
+  : '/api';
+
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },

@@ -13,8 +13,16 @@ interface ListingsGridProps {
 }
 
 const ListingsGrid: React.FC<ListingsGridProps> = ({ pools }) => {
+  if (pools.length === 0) {
+    return (
+      <div className="panel p-8 text-center">
+        <p className="muted">No pools match your current filters.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {pools.map(pool => (
         <PoolListingCard key={pool._id} pool={pool} />
       ))}
